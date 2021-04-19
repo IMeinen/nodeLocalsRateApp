@@ -12,6 +12,7 @@ interface IUpdateUserDTO {
   email: string;
   username: string;
   password: string;
+  id: string;
 }
 interface IUsersRepository {
   create(data: ICreateUserDTO): Promise<void>;

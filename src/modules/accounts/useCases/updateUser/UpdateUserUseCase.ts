@@ -1,11 +1,16 @@
 import { hash } from "bcryptjs";
 import { inject, injectable } from "tsyringe";
 
-import { AppError } from "../../../../errors/AppError";
 import {
   IUpdateUserDTO,
   IUsersRepository,
 } from "../../repositories/IUsersRepository";
+import {
+  validateName,
+  validatePassword,
+  validateEmail,
+  validateIfUserExistsById,
+} from "../validations";
 
 @injectable()
 class UpdateUserUseCase {
@@ -19,7 +24,16 @@ class UpdateUserUseCase {
     username,
     email,
     password,
+    id,
   }: IUpdateUserDTO): Promise<void> {
+    validateName(name);
+
+    validatePassword(password);
+
+    validateEmail(email);
+
+    validateIfUserExistsById(id, this.usersRepository);
+
     const passwordHash = await hash(password, 8);
 
     await this.usersRepository.updateUser({
@@ -27,6 +41,7 @@ class UpdateUserUseCase {
       username,
       email,
       password: passwordHash,
+      id,
     });
   }
 }

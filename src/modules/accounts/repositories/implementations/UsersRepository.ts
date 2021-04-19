@@ -39,8 +39,9 @@ class UsersRepository implements IUsersRepository {
     email,
     username,
     password,
+    id,
   }: IUpdateUserDTO): Promise<void> {
-    const user = await this.repository.findOne({ email });
+    const user = await this.repository.findOne({ id });
     const newUser = this.repository.merge(user, {
       name,
       email,

@@ -1,14 +1,18 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
-@Entity("categories")
-class Category {
+@Entity("locals")
+class Local {
   @PrimaryColumn()
   id?: string;
   @Column()
   name: string;
   @Column()
-  description: string;
+  address: string;
+  @Column()
+  latitude: string;
+  @Column()
+  longitude: string;
   @CreateDateColumn({ default: () => "NOW()" })
   createdAt: Date;
 
@@ -19,4 +23,4 @@ class Category {
   }
 }
 
-export { Category };
+export { Local };
